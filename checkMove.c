@@ -8,7 +8,19 @@
 #include "dataStructures.h"
 
 void checkMove(int row, int column) {
-    if (board.gameBoard[row - 1][column - 'a'] != EMPTY || isOnBoard(row - 1, column - 'a')) {
+    bool validMove = false;
+    int direction[8][2] = {
+            {1, 0},
+            {-1, 0},
+            {0, 1},
+            {0, -1},
+            {1, 1},
+            {-1, 1},
+            {1, -1},
+            {-1, -1},
+    };
+
+    if (board.gameBoard[row][column] != EMPTY || isOnBoard(row, column)) {
         printf("This move is not valid.\n");
         return;
     }
@@ -19,41 +31,43 @@ void checkMove(int row, int column) {
 
         if (*move == WHITE) {
             otherPiece = BLACK;
-        }
-
-        else {
+        } else {
             otherPiece = WHITE;
         }
 
-        checkRow(row, column, otherPiece, move);
-    }
+        for (size_t i = 0; i < 8; i++) {
+            int x = row;
+            int y = column;
+            int xChange = direction[i][0];
+            int yChange = direction[i][1];
 
-}
+            if (isOnBoard(row, column) && board.gameBoard[x][y] == otherPiece) {
+                x += xChange;
+                y += yChange;
 
-void checkRow(int row, int column, PieceColour otherPiece, PieceColour move) {
-    column++;
+                if (!(isOnBoard(x, y))) {
+                    continue;
+                }
 
-    if (isOnBoard(row, column) && board.gameBoard[row][column] == otherPiece) {
-        column++;
+                while (board.gameBoard[x][y] == otherPiece) {
+                    x += xChange;
+                    y += yChange;
 
-        if (!(isOnBoard(row, column))) {
-            return;
-        }
+                    if (!(isOnBoard(x, y))) {
+                        break;
+                    }
+                }
 
-        while (board.gameBoard[row][column] == otherPiece) {
-            column++;
+                if (board.gameBoard[x][y] == *move) {
+                    while (x != row && y != column) {
+                        x -= xChange;
+                        y -= yChange;
+                        board.gameBoard[x][y] = *move;
+                    }
 
-            if (!(isOnBoard(row, column))) {
-                return;
+                    validMove = true;
+                }
             }
-        }
-
-        if (board.gameBoard[row][column] == move) {
-            printf("This is a valid move.");
-        }
-
-        else {
-            printf("This move is not valid.");
         }
     }
 }
