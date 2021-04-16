@@ -1,6 +1,10 @@
 #include <stdio.h>
+#include "initialise.h"
+#include "dataStructures.h"
+#include "print.h"
 
 int main() {
-    printf("Hello, World!\n");
+    gameStart();
+    printBoard();
     return 0;
 }
