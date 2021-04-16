@@ -13,7 +13,7 @@ typedef enum othelloColour {
 
 typedef struct board {
     char gameBoard[8][8];
-    int turn;
+    PieceColour turnColour;
 } Board;
 
 typedef struct player {

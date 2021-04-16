@@ -7,7 +7,7 @@
 #include "dataStructures.h"
 
 void printBoard() {
-    printf("Score: %s (%c) %d:%d %s (%c)", player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
+    printf("\nScore: %s (%c) %d:%d %s (%c)", player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
 
     for (size_t i = 0; i < 8; i++) {
         printf("\n   --- --- --- --- --- --- --- --- \n");

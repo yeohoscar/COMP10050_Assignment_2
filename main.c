@@ -6,5 +6,7 @@
 int main() {
     gameStart();
     printBoard();
+
+
     return 0;
 }

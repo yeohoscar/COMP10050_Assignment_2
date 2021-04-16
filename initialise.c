@@ -29,4 +29,6 @@ void gameStart() {
 
     player1.score = 2;
     player2.score = 2;
+
+    board.turnColour = player1.colour;
 }
