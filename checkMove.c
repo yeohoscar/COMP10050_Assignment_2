@@ -7,7 +7,28 @@
 #include "checkMove.h"
 #include "dataStructures.h"
 
-void checkMove(int row, int column) {
+bool showValidMoves() {
+    bool existValidMove = false;
+
+    for (size_t i = 0; i < 8; i++) {
+        for (size_t j = 0; j < 8; j++) {
+            if (board.gameBoard[i][j] == VALID) {
+                board.gameBoard[i][j] = EMPTY;
+            }
+
+            if (board.gameBoard[i][j] == EMPTY) {
+                if (checkMove((int) i, (int) j, false)) {
+                    existValidMove = true;
+                    board.gameBoard[i][j] = VALID;
+                }
+            }
+        }
+    }
+
+    return existValidMove;
+}
+
+bool checkMove(int row, int column, bool flip) {
     bool validMove = false;
     int direction[8][2] = {
             {1, 0},
@@ -20,12 +41,12 @@ void checkMove(int row, int column) {
             {-1, -1},
     };
 
-    if (board.gameBoard[row][column] != EMPTY || isOnBoard(row, column)) {
-        printf("This move is not valid.\n");
-        return;
+    if ((board.gameBoard[row][column] != EMPTY && board.gameBoard[row][column] != VALID) || !(isOnBoard(row, column))) {
+        return false;
     }
 
     else {
+        board.gameBoard[row][column] = EMPTY;
         PieceColour *move = &board.turnColour;
         PieceColour otherPiece;
 
@@ -40,6 +61,8 @@ void checkMove(int row, int column) {
             int y = column;
             int xChange = direction[i][0];
             int yChange = direction[i][1];
+            x += xChange;
+            y += yChange;
 
             if (isOnBoard(row, column) && board.gameBoard[x][y] == otherPiece) {
                 x += xChange;
@@ -59,16 +82,20 @@ void checkMove(int row, int column) {
                 }
 
                 if (board.gameBoard[x][y] == *move) {
-                    while (x != row && y != column) {
-                        x -= xChange;
-                        y -= yChange;
-                        board.gameBoard[x][y] = *move;
-                    }
-
                     validMove = true;
+
+                    if (flip) {
+                        while (!(x == row && y == column)) {
+                            x -= xChange;
+                            y -= yChange;
+                            board.gameBoard[x][y] = *move;
+                        }
+                    }
                 }
             }
         }
+
+        return validMove;
     }
 }
 

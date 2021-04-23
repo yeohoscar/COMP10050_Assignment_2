@@ -5,10 +5,11 @@
 #ifndef ASSIGNMENT_2_CHECKMOVE_H
 #define ASSIGNMENT_2_CHECKMOVE_H
 
+#include <stdbool.h>
 #include "dataStructures.h"
 
-void checkMove(int row, int column);
-void checkRow(int row, int column, PieceColour otherPiece, PieceColour move);
+bool showValidMoves();
+bool checkMove(int row, int column, bool flip);
 bool isOnBoard(int x, int y);
 
 #endif //ASSIGNMENT_2_CHECKMOVE_H

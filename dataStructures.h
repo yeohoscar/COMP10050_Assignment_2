@@ -9,6 +9,7 @@ typedef enum othelloColour {
     BLACK = 'B',
     WHITE = 'W',
     EMPTY = ' ',
+    VALID = 'X',
 } PieceColour;
 
 typedef struct board {
