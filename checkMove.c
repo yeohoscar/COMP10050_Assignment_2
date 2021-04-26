@@ -5,10 +5,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "checkMove.h"
-#include "dataStructures.h"
 
 bool showValidMoves() {
-    bool existValidMove = false;
+    currentPlayer->existValidMove = false;
 
     for (size_t i = 0; i < 8; i++) {
         for (size_t j = 0; j < 8; j++) {
@@ -18,14 +17,14 @@ bool showValidMoves() {
 
             if (board.gameBoard[i][j] == EMPTY) {
                 if (checkMove((int) i, (int) j, false)) {
-                    existValidMove = true;
+                    currentPlayer->existValidMove = true;
                     board.gameBoard[i][j] = VALID;
                 }
             }
         }
     }
 
-    return existValidMove;
+    return currentPlayer->existValidMove;
 }
 
 bool checkMove(int row, int column, bool flip) {
@@ -47,7 +46,7 @@ bool checkMove(int row, int column, bool flip) {
 
     else {
         board.gameBoard[row][column] = EMPTY;
-        PieceColour *move = &board.turnColour;
+        PieceColour *move = &currentPlayer->colour;
         PieceColour otherPiece;
 
         if (*move == WHITE) {
@@ -89,10 +88,15 @@ bool checkMove(int row, int column, bool flip) {
                             x -= xChange;
                             y -= yChange;
                             board.gameBoard[x][y] = *move;
+                            currentPlayer->score++;
                         }
                     }
                 }
             }
+        }
+
+        if (validMove == false && flip == true) {
+            printf("Invalid move. Please try again.\n");
         }
 
         return validMove;
