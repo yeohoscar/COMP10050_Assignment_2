@@ -6,5 +6,6 @@
 #define ASSIGNMENT_2_PRINT_H
 
 void printBoard();
+void printResults();
 
 #endif //ASSIGNMENT_2_PRINT_H

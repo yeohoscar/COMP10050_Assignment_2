@@ -44,8 +44,8 @@ void runGame() {
     while (!gameOver()) {
         if (!showValidMoves()) {
             while (passInput != 'p') {
-                printf("No available moves. Please enter 'p' to pass");
-                scanf("%c", &passInput);
+                printf("\nNo available moves. Please enter 'p' to pass");
+                scanf(" %c", &passInput);
             }
 
         } else {
