@@ -9,6 +9,7 @@
 #include "print.h"
 #include "dataStructures.h"
 
+//Prints current board state
 void printBoard() {
     printf("\nScore: %s (%c) %d:%d %s (%c)", player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
 
@@ -27,6 +28,7 @@ void printBoard() {
     printf("    a   b   c   d   e   f   g   h  ");
 }
 
+//Prints game results to file
 void printResults() {
     FILE *fp;
 
@@ -34,20 +36,25 @@ void printResults() {
         printf("Error opening file.");
         exit(0);
     } else {
+        //Get current time
         time_t t;
         time(&t);
         char *currTime = ctime(&t);
         currTime[strcspn(currTime, "\n")] = '\0';
 
+        //Print results to file
         if (player1.score > player2.score) {
+            printf("Winner: %s - Score: %s (%c) %d:%d %s (%c)\n", player1.name, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
             fprintf(fp, "%s - Winner: %s - Score: %s (%c) %d:%d %s (%c)\n", currTime, player1.name, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
         }
 
         else if (player1.score < player2.score) {
+            printf("Winner: %s - Score: %s (%c) %d:%d %s (%c)\n", player2.name, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
             fprintf(fp, "%s - Winner: %s - Score: %s (%c) %d:%d %s (%c)\n", currTime, player2.name, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
         }
 
         else {
+            printf("Draw - Score: %s (%c) %d:%d %s (%c)\n", player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
             fprintf(fp, "%s - Draw - Score: %s (%c) %d:%d %s (%c)\n", currTime, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
         }
 

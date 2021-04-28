@@ -6,20 +6,16 @@
 #include <stdbool.h>
 #include "checkMove.h"
 
+//Check board for current player's valid moves
 bool showValidMoves() {
     currentPlayer->existValidMove = false;
 
+    //Check every cell
     for (size_t i = 0; i < 8; i++) {
         for (size_t j = 0; j < 8; j++) {
-            if (board.gameBoard[i][j] == VALID) {
-                board.gameBoard[i][j] = EMPTY;
-            }
-
-            if (board.gameBoard[i][j] == EMPTY) {
-                if (checkMove((int) i, (int) j, false)) {
-                    currentPlayer->existValidMove = true;
-                    board.gameBoard[i][j] = VALID;
-                }
+            if (checkMove((int) i, (int) j, false)) { //checks if cell is a valid move
+                currentPlayer->existValidMove = true; //there exists a move that can be made
+                board.gameBoard[i][j] = VALID; // marks the cell as valid
             }
         }
     }
@@ -27,24 +23,28 @@ bool showValidMoves() {
     return currentPlayer->existValidMove;
 }
 
+//Checks if putting a piece in the cell is a valid move
 bool checkMove(int row, int column, bool flip) {
     bool validMove = false;
-    int direction[8][2] = {
-            {1, 0},
-            {-1, 0},
-            {0, 1},
-            {0, -1},
-            {1, 1},
-            {-1, 1},
-            {1, -1},
-            {-1, -1},
+    int direction[8][2] = { //2d array containing the change in x and y values when moving in the eight directions.
+            {1, 0},   //right
+            {-1, 0},  //left
+            {0, 1},   //up
+            {0, -1},  //down
+            {1, 1},   //up and right
+            {-1, 1},  //up and left
+            {1, -1},  //down and right
+            {-1, -1}, //down and left
     };
 
-    if ((board.gameBoard[row][column] != EMPTY && board.gameBoard[row][column] != VALID) || !(isOnBoard(row, column))) {
+    if (flip && board.gameBoard[row][column] != VALID) {
+        printf("Invalid move. Please try again.\n");
         return false;
     }
 
-    else {
+    if (board.gameBoard[row][column] != EMPTY && board.gameBoard[row][column] != VALID) {
+        return false;
+    } else {
         board.gameBoard[row][column] = EMPTY;
         PieceColour *move = &currentPlayer->colour;
         PieceColour otherPiece;
@@ -55,6 +55,7 @@ bool checkMove(int row, int column, bool flip) {
             otherPiece = WHITE;
         }
 
+        //checks in all eight directions
         for (size_t i = 0; i < 8; i++) {
             int x = row;
             int y = column;
@@ -63,14 +64,17 @@ bool checkMove(int row, int column, bool flip) {
             x += xChange;
             y += yChange;
 
+            //If the next piece in the direction of the move is the opposite colour
             if (isOnBoard(row, column) && board.gameBoard[x][y] == otherPiece) {
+                //Move in current direction
                 x += xChange;
                 y += yChange;
 
-                if (!(isOnBoard(x, y))) {
+                if (!(isOnBoard(x, y))) { //if it goes off the board
                     continue;
                 }
 
+                //Keep moving in the direction until it is not the other colour
                 while (board.gameBoard[x][y] == otherPiece) {
                     x += xChange;
                     y += yChange;
@@ -80,11 +84,12 @@ bool checkMove(int row, int column, bool flip) {
                     }
                 }
 
+                //After the chain of other colours, if the cell contains the current player's piece
                 if (board.gameBoard[x][y] == *move) {
                     validMove = true;
 
-                    if (flip) {
-                        while (!(x == row && y == column)) {
+                    if (flip) { //If pieces are to be flipped
+                        while (!(x == row && y == column)) { //move in opposite direction, flipping each piece
                             x -= xChange;
                             y -= yChange;
                             board.gameBoard[x][y] = *move;
@@ -95,14 +100,11 @@ bool checkMove(int row, int column, bool flip) {
             }
         }
 
-        if (validMove == false && flip == true) {
-            printf("Invalid move. Please try again.\n");
-        }
-
         return validMove;
     }
 }
 
+//Predicate function to check if the coordinates are on the board
 bool isOnBoard(int x, int y) {
     return x < 8 && x > -1 && y < 8 && y > -1;
 }

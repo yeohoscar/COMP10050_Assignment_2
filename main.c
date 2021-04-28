@@ -5,6 +5,7 @@
 int main(void) {
     gameStart();
     runGame();
+    printBoard();
     printResults();
     return 0;
 }
