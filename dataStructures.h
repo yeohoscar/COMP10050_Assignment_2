@@ -14,10 +14,6 @@ typedef enum othelloColour {
     VALID = 'X',
 } PieceColour;
 
-typedef struct board {
-    char gameBoard[8][8];
-} Board;
-
 typedef struct player {
     char name[20];
     PieceColour colour;
@@ -25,8 +21,13 @@ typedef struct player {
     bool existValidMove;
 } Player;
 
+typedef struct board {
+    char gameBoard[8][8];
+    Player *currentPlayer;
+} Board;
+
 Player player1, player2;
-Player *currentPlayer;
+//Player *currentPlayer;
 Board board;
 
 #endif //ASSIGNMENT_2_DATASTRUCTURES_H

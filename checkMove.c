@@ -8,19 +8,19 @@
 
 //Check board for current player's valid moves
 bool showValidMoves() {
-    currentPlayer->existValidMove = false;
+    board.currentPlayer->existValidMove = false;
 
     //Check every cell
     for (size_t i = 0; i < 8; i++) {
         for (size_t j = 0; j < 8; j++) {
             if (checkMove((int) i, (int) j, false)) { //checks if cell is a valid move
-                currentPlayer->existValidMove = true; //there exists a move that can be made
+                board.currentPlayer->existValidMove = true; //there exists a move that can be made
                 board.gameBoard[i][j] = VALID; // marks the cell as valid
             }
         }
     }
 
-    return currentPlayer->existValidMove;
+    return board.currentPlayer->existValidMove;
 }
 
 //Checks if putting a piece in the cell is a valid move
@@ -46,7 +46,7 @@ bool checkMove(int row, int column, bool flip) {
         return false;
     } else {
         board.gameBoard[row][column] = EMPTY;
-        PieceColour *move = &currentPlayer->colour;
+        PieceColour *move = &board.currentPlayer->colour;
         PieceColour otherPiece;
 
         if (*move == WHITE) {
@@ -93,7 +93,7 @@ bool checkMove(int row, int column, bool flip) {
                             x -= xChange;
                             y -= yChange;
                             board.gameBoard[x][y] = *move;
-                            currentPlayer->score++;
+                            board.currentPlayer->score++;
                         }
                     }
                 }

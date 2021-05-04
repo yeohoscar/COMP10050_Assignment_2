@@ -39,7 +39,7 @@ void gameStart() {
     player2.existValidMove = true;
 
     //Set current turn to player 1
-    currentPlayer = &player1;
+    board.currentPlayer = &player1;
 }
 
 //Handles the running of the game
@@ -63,10 +63,10 @@ void runGame() {
         }
 
         //Change current turn to the other player
-        if (&(*currentPlayer) == &player1) {
-            currentPlayer = &player2;
+        if (&(*board.currentPlayer) == &player1) {
+            board.currentPlayer = &player2;
         } else {
-            currentPlayer = &player1;
+            board.currentPlayer = &player1;
         }
 
         passInput = '\0'; //resets passInput
