@@ -24,7 +24,7 @@ bool showValidMoves() {
 }
 
 //Checks if putting a piece in the cell is a valid move
-bool checkMove(int row, int column, bool flip) {
+bool checkMove(int row, int column, bool flip) { //flip controls if piece are flipped. If flip is false, function only checks if move is valid. If true, pieces are flipped
     bool validMove = false;
     int direction[8][2] = { //2d array containing the change in x and y values when moving in the eight directions.
             {1, 0},   //right

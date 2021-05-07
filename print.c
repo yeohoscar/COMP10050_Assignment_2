@@ -29,19 +29,13 @@ void printBoard() {
 }
 
 //Prints game results to file
-void printResults() {
+void printResults(char currTime) {
     FILE *fp;
 
     if ((fp = fopen("othello-results.txt", "a+")) == NULL) {
         printf("Error opening file.");
         exit(0);
     } else {
-        //Get current time
-        time_t t;
-        time(&t);
-        char *currTime = ctime(&t);
-        currTime[strcspn(currTime, "\n")] = '\0';
-
         //Print results to file
         if (player1.score > player2.score) {
             printf("Winner: %s - Score: %s (%c) %d:%d %s (%c)\n", player1.name, player1.name, player1.colour, player1.score, player2.score, player2.name, player2.colour);
