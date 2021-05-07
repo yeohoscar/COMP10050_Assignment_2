@@ -24,10 +24,10 @@ typedef struct player {
 typedef struct board {
     char gameBoard[8][8];
     Player *currentPlayer;
+    Player *otherPlayer;
 } Board;
 
 Player player1, player2;
-//Player *currentPlayer;
 Board board;
 
 #endif //ASSIGNMENT_2_DATASTRUCTURES_H

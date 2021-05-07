@@ -17,6 +17,7 @@ int main(void) {
     gameStart();
     runGame();
     printBoard();
-    printResults(*currTime);
+    printResults(currTime);
+
     return 0;
 }

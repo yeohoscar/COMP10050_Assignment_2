@@ -6,6 +6,6 @@
 #define ASSIGNMENT_2_PRINT_H
 
 void printBoard();
-void printResults(char currTime);
+void printResults(char *currTime);
 
 #endif //ASSIGNMENT_2_PRINT_H

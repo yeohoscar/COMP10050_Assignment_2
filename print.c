@@ -4,7 +4,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
 #include "print.h"
 #include "dataStructures.h"
@@ -29,7 +28,7 @@ void printBoard() {
 }
 
 //Prints game results to file
-void printResults(char currTime) {
+void printResults(char *currTime) {
     FILE *fp;
 
     if ((fp = fopen("othello-results.txt", "a+")) == NULL) {

@@ -65,7 +65,7 @@ bool checkMove(int row, int column, bool flip) { //flip controls if piece are fl
             y += yChange;
 
             //If the next piece in the direction of the move is the opposite colour
-            if (isOnBoard(row, column) && board.gameBoard[x][y] == otherPiece) {
+            if (isOnBoard(x, y) && board.gameBoard[x][y] == otherPiece) {
                 //Move in current direction
                 x += xChange;
                 y += yChange;
@@ -94,7 +94,10 @@ bool checkMove(int row, int column, bool flip) { //flip controls if piece are fl
                             y -= yChange;
                             board.gameBoard[x][y] = *move;
                             board.currentPlayer->score++;
+                            board.otherPlayer->score--;
                         }
+
+                        board.otherPlayer->score++;
                     }
                 }
             }
