@@ -45,7 +45,13 @@ bool checkMove(int row, int column, bool flip) { //flip controls if piece are fl
     if (board.gameBoard[row][column] != EMPTY && board.gameBoard[row][column] != VALID) {
         return false;
     } else {
-        board.gameBoard[row][column] = EMPTY;
+        if (flip) {
+            board.gameBoard[row][column] = board.currentPlayer->colour;
+            board.currentPlayer->score++;
+        } else {
+            board.gameBoard[row][column] = EMPTY;
+        }
+
         PieceColour *move = &board.currentPlayer->colour;
         PieceColour otherPiece;
 
@@ -89,15 +95,18 @@ bool checkMove(int row, int column, bool flip) { //flip controls if piece are fl
                     validMove = true;
 
                     if (flip) { //If pieces are to be flipped
+                        x -= xChange;
+                        y -= yChange;
+
                         while (!(x == row && y == column)) { //move in opposite direction, flipping each piece
-                            x -= xChange;
-                            y -= yChange;
                             board.gameBoard[x][y] = *move;
                             board.currentPlayer->score++;
                             board.otherPlayer->score--;
+                            x -= xChange;
+                            y -= yChange;
                         }
 
-                        board.otherPlayer->score++;
+                        //board.otherPlayer->score++;
                     }
                 }
             }

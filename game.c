@@ -10,6 +10,12 @@
 
 //Initialises everything needed for the game
 void gameStart() {
+    printf("Welcome to Othello!\n"
+           "Place tiles to capture the other player's pieces.\n"
+           " - Tiles can only be captured if the a tile is placed in a line containing adjecent tiles of the other colour and ending in your colour in that direction."
+           "Valid moves are marked with an X.\n"
+           "The game ends when neither player can make a move or the board is filled.\n\n");
+
     //Get player names and assigns them colours
     printf("Player 1, please enter your name: ");
     scanf("%s", player1.name);
@@ -51,7 +57,7 @@ void runGame() {
     while (!gameOver()) { //Predicate function that checks if game end conditions are met
         if (!showValidMoves()) { //Scans for valid moves
             while (passInput != 'p') {
-                printf("\nNo available moves. Please enter 'p' to pass");
+                printf("\n%s, you have no available moves. Please enter 'p' to pass", board.currentPlayer->name);
                 scanf(" %c", &passInput);
             }
 
@@ -81,7 +87,7 @@ void getMove(int *row, int *column) {
     char input[2];
     char *alphaColumn;
 
-    printf("\nPlease enter a move (Format: '1d'): ");
+    printf("\n%s, please enter a move (Format: '1d'): ", board.currentPlayer->name);
     fflush(stdin);
     fgets(input, 3, stdin); //Takes in user input as a string
 
